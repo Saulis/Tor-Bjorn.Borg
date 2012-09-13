@@ -67,6 +67,7 @@
 (defmathfn-1 sqrt)
 (defmathfn-1 tan)
 (defmathfn-1 toRadians)
+(defmathfn-1 toDegrees)
 
 ;
 ; Sign

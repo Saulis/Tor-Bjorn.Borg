@@ -3,16 +3,40 @@
         [clojure.tools.logging :only (info error)]))
 
 (def ^:dynamic cached-data [])
-(def ^:dynamic target-position 240)
+(def ^:dynamic previous-position)
+(def ^:dynamic target-height 240)
 
-(defn clear-data []
-  (def cached-data []))
+(defn save-previous-position [data]
+  (def previous-position data))
 
 (defn balls [data]
   (map :ball data))
 
-(defn ball-positions [balls]
-  (map :pos balls))
+(defn ball-positions []
+  (map :pos (balls cached-data)))
+
+(defn new-target-position [p1 p2]
+  (landing-point (:x p2) (:y p2) (slope p1 p2)))
+
+(defn previous-ball-position []
+  (first (take-last 2 (ball-positions ))))
+
+(defn current-ball-position []
+  (last (ball-positions)))
+
+(defn refresh-data [data]
+  (info data)
+  (info (str "Target: " target-height))
+  (def cached-data (conj cached-data data))
+  (if (> (count cached-data) 2)
+    (def target-height (:y (new-target-position (previous-ball-position) (current-ball-position))))))
+
+(defn clear-data []
+  (def cached-data []))
+
+
+
+
 
 (defn ball-x-positions [balls]
   (map :x (ball-positions balls)))
@@ -40,3 +64,7 @@
   (def cached-data (conj cached-data data))
   (if (> (count cached-data) 1)
     (update-target-position cached-data)))
+
+
+
+

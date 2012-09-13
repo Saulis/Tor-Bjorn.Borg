@@ -2,7 +2,9 @@
   (:use [clojure.data.json :only (read-json json-str)]
         [clojure.tools.logging :only (info error)]
         clojure.contrib.math
-        borg.data)
+        borg.data
+        borg.math
+        borg.constants)
   (:import [java.net Socket]
            [java.io PrintWriter InputStreamReader BufferedReader])
   (:gen-class :main true))
@@ -57,17 +59,30 @@
 (defn target-position-is-away [target-position current-position]
   (>= (difference-between target-position current-position) 5))
 
-(defn move-towards-target-position [target-position current-position]
-    (info (str "Current position: " current-position))
-    (if (target-position-is-away target-position current-position)
-      (move-at-speed target-position current-position)
-      stop))
+(defn move-towards-target-height [target-height current-height]
+  (if (> target-height current-height)
+    move-down-full-speed
+    move-up-full-speed))
 
-(defn current-position [{left :left}]
+;(defn move-towards-target-position [target-position current-position]
+;    (info (str "Current position: " current-position))
+;    (if (target-position-is-away target-position current-position)
+;      (move-at-speed target-position current-position)
+;      stop))
+
+(defn current-height [{left :left}]
   (:y left))
 
+(defn get-target-position [previous-data current-data]
+  )
+
+(defn foo-target-height []
+  (if (> (count cached-data ) 2)
+  (:y (new-target-position (previous-ball-position) (current-ball-position)))
+  200))
+
 (defn next-move [data]
-  (move-towards-target-position target-position (current-position data)))
+  (move-towards-target-height (foo-target-height) (current-height data)))
 
 (defn ball-is-too-close-to-borders [{pos :pos}]
   (or (<= (:x pos) 50)
@@ -76,17 +91,15 @@
     (>= (:y pos) 430)))
 
 (defn gather-data [data]
-  (info (str "Now tracking " (count cached-data) " rows of data."))
   (info (str "Target position: " target-position ))
-  (if (ball-is-too-close-to-borders (:ball data))
-    (clear-data)
-    (update-data data)))
+  (update-data data))
+
 
 (defn handle-data [conn data]
-  (gather-data data)
+  (refresh-data data)
   (if (is-it-time-to-move data)
-    (write conn (next-move data))
-    (info (str "Waiting.. Resistance is futile."))))
+    (write conn (next-move data))))
+
 
 (defn start-playing [data]
   (info (str "Game started: " (nth data 0) " vs. " (nth data 1)))
@@ -95,7 +108,7 @@
 (defn handle-message [conn {msgType :msgType data :data}]
   (case msgType
     joined (info (str "Game joined successfully. Use following URL for visualization: " data))
-    gameStarted (start-playing data)
+    gameStarted (info (str "Game started: " (nth data 0) " vs. " (nth data 1)))
     gameIsOn (handle-data conn data)
     gameIsOver (info (str "Game ended. Winner: " data))
     error (error data)

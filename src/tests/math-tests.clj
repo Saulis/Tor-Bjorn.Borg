@@ -18,11 +18,11 @@
 (deftest hit-height-on-left-tests
   (is (= (hit-height-on-left 320 0 -1) 320)))
 
-;(deftest landing-point-tests
-  ;(is (= (landing-point (to-point 640 480) (to-point 320 480)) (to-point 0 480)))
-  ;(is (= (landing-point (to-point 640 0) (to-point 320 0)) (to-point 0 0)))
-  ;(is (= (landing-point (to-point 640 0) (to-point 320 240)) (to-point 0 480)))
-  ;(is (= (landing-point (to-point 640 0) (to-point 160 240)) (to-point 0 0))))
+(deftest distance-to-top-hit-tests
+  (is (= (distance-to-top-hit 0) 475)))
+
+(deftest landing-point-tests
+  (is (= (landing-point 640 480 1.0) (to-point 0 480))))
 
 (deftest impact-height-on-left-wall-tests
   (is (= (impact-height-on-left-wall right-middle center) (:y left-middle))))
