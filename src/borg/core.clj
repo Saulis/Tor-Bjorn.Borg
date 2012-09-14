@@ -79,7 +79,9 @@
 
 (defn foo-target-height []
   (if (> (count cached-data ) 2)
-  (:y (new-target-position (previous-ball-position) (current-ball-position)))
+    (if (ball-is-moving-right (previous-ball-position) (current-ball-position))
+      240
+      (:y (new-target-position (previous-ball-position) (current-ball-position))))
   200))
 
 (defn next-move [data]

@@ -50,11 +50,11 @@
 (defn ball-y-positions [balls]
   (map :y (ball-positions balls)))
 
-(defn ball-x-delta [balls]
-  (- (first (ball-x-positions balls)) (last (ball-x-positions balls))))
+(defn ball-x-delta [previous-ball-position current-ball-position]
+  (- (:x previous-ball-position) (:x current-ball-position)))
 
-(defn ball-is-moving-right [balls]
-  (neg? (ball-x-delta balls)))
+(defn ball-is-moving-right [previous-ball-position current-ball-position]
+  (neg? (ball-x-delta previous-ball-position current-ball-position)))
 
 (defn calculate-target-position [data]
   (info (str "calculating target position"))
