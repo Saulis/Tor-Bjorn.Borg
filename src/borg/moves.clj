@@ -6,7 +6,7 @@
 (def max-direction 1.0)
 
 (defn target-height-with-paddle [target-height]
-  (- target-height (/ paddle-height 2)))
+  (- target-height 2))
 
 (defn distance-to-target [target-height current-height]
   (- (target-height-with-paddle target-height) current-height))

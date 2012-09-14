@@ -24,15 +24,21 @@
 (defn current-ball-position []
   (last (ball-positions)))
 
+(defn velocity [p1 p2]
+  (x-delta p1 p2))
+
 (defn refresh-data [data]
   (info data)
-  (info (str "Target: " target-height))
+  ;(info (str "Target: " target-height))
+  (if (> (count cached-data) 2)
+    (info (str "Velocity: " (velocity (previous-ball-position) (current-ball-position) ))))
   (def cached-data (conj cached-data data))
   (if (> (count cached-data) 2)
     (def target-height (:y (new-target-position (previous-ball-position) (current-ball-position))))))
 
 (defn clear-data []
   (def cached-data []))
+
 
 
 
