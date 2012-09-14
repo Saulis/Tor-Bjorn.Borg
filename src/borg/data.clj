@@ -40,10 +40,10 @@
   (Math/sqrt (+ (Math/pow (x-delta p1 p2) 2) (Math/pow (y-delta p1 p2) 2))))
 
 (defn refresh-data [data]
-  ;(info data)
+  (info data)
   ;(info (str "Target: " target-height))
-  (if (> (count cached-data) 2)
-    (info (str "Velocity: " (velocity (previous-ball-position) (current-ball-position) ))))
+  ;(if (> (count cached-data) 2)
+    ;(info (str "Velocity: " (velocity (previous-ball-position) (current-ball-position) ))))
   (def cached-data (conj cached-data data))
   (if (> (count cached-data) 2)
     (def target-height (:y (new-target-position (previous-ball-position) (current-ball-position))))))
