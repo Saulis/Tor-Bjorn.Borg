@@ -97,12 +97,48 @@
   (info (str "Target position: " target-position ))
   (update-data data))
 
+(defn new-direction []
+  (direction (foo-target-height) (current-height (last cached-data))))
+
+(defn change-direction []
+  (save-move (new-direction))
+  (move (new-direction)))
+
+(defn current-direction []
+  (:direction (last cached-moves)))
+
+(defn direction-is-changing []
+  (not= (current-direction) (new-direction)))
+
+(defn ten-messages-have-not-been-sent []
+  (< (count cached-moves) 10))
+
+(defn tenth-message []
+  (first (take-last 10 cached-moves)))
+
+(defn time-of-tenth-message []
+  (:time (tenth-message)))
+
+(defn time-since-tenth-message []
+  (- (System/currentTimeMillis) (time-of-tenth-message)))
+
+(defn atleast-one-second-has-passed-since-tenth-message []
+  (>= (time-since-tenth-message) 1000))
+
+(defn ten-messages-have-not-been-sent-under-one-second []
+  (or
+    (ten-messages-have-not-been-sent)
+    (atleast-one-second-has-passed-since-tenth-message)))
+
+(defn it-is-time-to-change-direction []
+  (and
+    (direction-is-changing)
+    (ten-messages-have-not-been-sent-under-one-second)))
 
 (defn handle-data [conn data]
   (refresh-data data)
-  (if (is-it-time-to-move data)
-    (write conn (next-move data))))
-
+  (if (it-is-time-to-change-direction)
+    (write conn (change-direction))))
 
 (defn start-playing [data]
   (info (str "Game started: " (nth data 0) " vs. " (nth data 1)))
