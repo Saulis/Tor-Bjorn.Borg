@@ -4,7 +4,8 @@
         clojure.contrib.math
         borg.data
         borg.math
-        borg.constants)
+        borg.constants
+        borg.moves)
   (:import [java.net Socket]
            [java.io PrintWriter InputStreamReader BufferedReader])
   (:gen-class :main true))
@@ -82,7 +83,7 @@
   200))
 
 (defn next-move [data]
-  (move-towards-target-height (foo-target-height) (current-height data)))
+  (move (direction (foo-target-height) (current-height data))))
 
 (defn ball-is-too-close-to-borders [{pos :pos}]
   (or (<= (:x pos) 50)
