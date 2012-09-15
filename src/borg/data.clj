@@ -1,5 +1,6 @@
 (ns borg.data
   (:use borg.math
+        borg.moves
         [clojure.tools.logging :only (info error)]))
 
 (defstruct time-direction :time :direction)
@@ -27,9 +28,6 @@
 (defn ball-positions []
   (map :pos (balls cached-data)))
 
-(defn new-target-position [p1 p2]
-  (landing-point (:x p2) (:y p2) (slope p1 p2)))
-
 (defn previous-ball-position []
   (first (take-last 2 (ball-positions ))))
 
@@ -46,7 +44,7 @@
     ;(info (str "Velocity: " (velocity (previous-ball-position) (current-ball-position) ))))
   (def cached-data (conj cached-data data))
   (if (> (count cached-data) 2)
-    (def target-height (:y (new-target-position (previous-ball-position) (current-ball-position))))))
+    (def target-height (new-target-height (previous-ball-position) (current-ball-position)))))
 
 
 

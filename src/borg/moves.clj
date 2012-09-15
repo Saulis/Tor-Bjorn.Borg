@@ -6,7 +6,7 @@
 (def max-direction 1.0)
 
 (defn target-height-with-paddle [target-height]
-  (- target-height 3))
+  (- target-height 3)) ;TODO
 
 (defn distance-to-target [target-height current-height]
   (- (target-height-with-paddle target-height) current-height))
@@ -29,3 +29,6 @@
 
 (defn direction [target-height current-height]
   (trim-direction target-height current-height))
+
+(defn new-target-height [p1 p2]
+  (landing-height (:x p2) (:y p2) (slope p1 p2)))

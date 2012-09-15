@@ -5,7 +5,8 @@
         borg.data
         borg.math
         borg.constants
-        borg.moves)
+        borg.moves
+        borg.messages)
   (:import [java.net Socket]
            [java.io PrintWriter InputStreamReader BufferedReader])
   (:gen-class :main true))
@@ -78,15 +79,15 @@
   )
 
 (defn ball-is-close [ball-position]
-  (< (:x ball-position) 50))
+  (< (:x ball-position) 50))       ;TODO
 
 (defn foo-target-height []
   (if (> (count cached-data ) 2)
     (if (ball-is-moving-right (previous-ball-position) (current-ball-position))
       240
       (if (ball-is-close (current-ball-position))
-      (- (:y (new-target-position (previous-ball-position) (current-ball-position))) 50)
-      (:y (new-target-position (previous-ball-position) (current-ball-position)))))
+      (- (new-target-height (previous-ball-position) (current-ball-position)) 50) ;TODO
+      (new-target-height (previous-ball-position) (current-ball-position))))
   200))
 
 (defn next-move [data]
@@ -115,31 +116,10 @@
 (defn direction-is-changing []
   (not= (current-direction) (new-direction)))
 
-(defn nine-messages-have-not-been-sent []
-  (< (count cached-moves) 9))
-
-(defn ninth-message []
-  (first (take-last 9 cached-moves)))
-
-(defn time-of-ninth-message []
-  (:time (ninth-message)))
-
-(defn time-since-ninth-message []
-  (- (System/currentTimeMillis) (time-of-ninth-message)))
-
-(defn atleast-one-second-has-passed-since-ninth-message []
-  (>= (time-since-ninth-message) 1000))
-
-;Using ten messages was kinda pushing it - got kicked from the server a few times. Let's go with nine msgs / 10 secs.
-(defn nine-messages-have-not-been-sent-under-one-second []
-  (or
-    (nine-messages-have-not-been-sent)
-    (atleast-one-second-has-passed-since-ninth-message)))
-
 (defn it-is-time-to-change-direction []
   (and
     (direction-is-changing)
-    (nine-messages-have-not-been-sent-under-one-second)))
+    (nine-messages-have-not-been-sent-under-one-second cached-moves)))
 
 (defn handle-data [conn data]
   (refresh-data data)

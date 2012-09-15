@@ -78,3 +78,6 @@
   (if (ball-lands-on-left x y slope)
     (hit-point-on-left x y slope)
     (landing-point-via-bounce x y slope)))
+
+(defn landing-height [x y slope]
+  (:y (landing-point x y slope)))
