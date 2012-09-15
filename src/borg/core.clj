@@ -115,7 +115,7 @@
   (:direction (last-message)))
 
 (defn direction-is-changing []
-  (if (new-direction-is-accurate last-three-ball-positions)
+  (if (new-direction-is-accurate (last-three-ball-positions))
     (not= (current-direction) (new-direction))
     false))
 

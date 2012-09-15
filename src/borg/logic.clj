@@ -20,7 +20,7 @@
   (abs (- (previous-slope ball-positions) (current-slope ball-positions))))
 
 (defn- slope-is-steady [ball-positions]
-  (< (difference-between-slopes ball-positions) 1)) ;TODO find optimal factor
+  (< (difference-between-slopes ball-positions) 0.5)) ;TODO find optimal factor
 
 (defn new-direction-is-accurate [ball-positions]
   (if (there-are-not-enough-positions-to-estimate-direction ball-positions)
