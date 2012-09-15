@@ -2,6 +2,7 @@
   (:use [clojure.data.json :only (read-json json-str)]
         [clojure.tools.logging :only (info error)]
         clojure.contrib.math
+        borg.logic
         borg.data
         borg.math
         borg.constants
@@ -106,25 +107,27 @@
 (defn new-direction []
   (direction (foo-target-height) (current-height (last cached-data))))
 
-(defn change-direction []
-  (save-move (new-direction))
-  (move (new-direction)))
+(defn change-direction [conn]
+  (save-message (new-direction))
+  (write conn (move (new-direction))))
 
 (defn current-direction []
-  (:direction (last cached-moves)))
+  (:direction (last-message)))
 
 (defn direction-is-changing []
-  (not= (current-direction) (new-direction)))
+  (if (new-direction-is-accurate last-three-ball-positions)
+    (not= (current-direction) (new-direction))
+    false))
 
 (defn it-is-time-to-change-direction []
   (and
     (direction-is-changing)
-    (nine-messages-have-not-been-sent-under-one-second cached-moves)))
+    (nine-messages-have-not-been-sent-under-one-second sent-messages)))
 
 (defn handle-data [conn data]
   (refresh-data data)
   (if (it-is-time-to-change-direction)
-    (write conn (change-direction))))
+    (change-direction conn)))
 
 (defn start-playing [data]
   (info (str "Game started: " (nth data 0) " vs. " (nth data 1)))

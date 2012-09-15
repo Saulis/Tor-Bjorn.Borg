@@ -6,18 +6,21 @@
 (defstruct time-direction :time :direction)
 
 (def ^:dynamic cached-data [])
-(def ^:dynamic cached-moves [])
+(def ^:dynamic sent-messages [])
 (def ^:dynamic previous-position)
 (def ^:dynamic target-height 240)
 
 (defn clear-data []
   (def cached-data []))
 
-(defn clear-moves []
-  (def cached-moves []))
+(defn clear-messages []
+  (def sent-messages []))
 
-(defn save-move [direction]
-  (def cached-moves (conj cached-moves (struct time-direction (System/currentTimeMillis) direction))))
+(defn save-message [direction]
+  (def sent-messages (conj sent-messages (struct time-direction (System/currentTimeMillis) direction))))
+
+(defn last-message []
+  (last sent-messages))
 
 (defn save-previous-position [data]
   (def previous-position data))
@@ -29,13 +32,19 @@
   (map :pos (balls cached-data)))
 
 (defn previous-ball-position []
-  (first (take-last 2 (ball-positions ))))
+  (first (take-last 2 (ball-positions))))
 
 (defn current-ball-position []
   (last (ball-positions)))
 
+(defn last-three-ball-positions []
+  (take-last 3 (ball-positions)))
+
+;for debugging
 (defn velocity [p1 p2]
   (Math/sqrt (+ (Math/pow (x-delta p1 p2) 2) (Math/pow (y-delta p1 p2) 2))))
+
+
 
 (defn refresh-data [data]
   (info data)
