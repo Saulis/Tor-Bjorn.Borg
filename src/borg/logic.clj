@@ -43,6 +43,10 @@
 (defn- landing-point-via-right [x y slope]
   (landing-point (right-hit-width) (hit-height-on-right x y slope) (invert slope)))
 
+;NOTE! THIS ONLY APPLIES WHEN BALL IS GOING LEFT
+(defn- ball-is-going-down [slope]
+  (pos? slope))
+
 (defn- landing-point-via-bounce [x y slope]
   (if (ball-is-going-down slope)
     (landing-point-via-bottom x y slope)

@@ -22,7 +22,7 @@
   (- (left-hit-width) x))
 
 (defn distance-to-right-hit [x]
-  (- x (right-hit-width)))
+  (- (right-hit-width) x))
 
 (defn distance-to-top-hit [y]
   (- (top-hit-height) y))
@@ -54,9 +54,7 @@
 (defn hit-point-on-left [x y slope]
   (to-point (left-hit-width) (hit-height-on-left x y slope)))
 
-;NOTE! THIS ONLY APPLIES WHEN BALL IS GOING LEFT
-(defn ball-is-going-down [slope]
-  (pos? slope))
+
 
 
 
