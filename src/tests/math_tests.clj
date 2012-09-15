@@ -29,4 +29,10 @@
   (is (false? (ball-lands-on-right (/ max-width 2) (/ max-height 2) -1))) ;from center, inverse 45 degree scope
   (is (true? (ball-lands-on-right (/ max-width 2) (/ max-height 2) 480/640))) ;from center, diagonal scope
   (is (true? (ball-lands-on-right (/ max-width 2) (/ max-height 2) -480/640))) ;from center, inverse diagonal scope
+  (is (true? (ball-lands-on-right (left-hit-width) (top-hit-height) -480/640)))
   )
+
+(deftest ball-lands-on-bottom-tests
+  (is (true? (ball-lands-on-bottom (left-hit-width) (top-hit-height) -1)))
+  (is (false? (ball-lands-on-bottom (left-hit-width) (top-hit-height) -480/640)))
+  (is (false? (ball-lands-on-bottom (left-hit-width) (top-hit-height) 1))))

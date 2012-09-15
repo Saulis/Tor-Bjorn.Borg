@@ -45,14 +45,21 @@
 (defn hit-width-on-bottom [x y slope]
   (hit-width x (distance-to-bottom-hit y) slope))
 
+(defn hit-point-on-left [x y slope]
+  (to-point (left-hit-width) (hit-height-on-left x y slope)))
+
+(defn hit-point-on-right [x y slope]
+  (to-point (right-hit-width) (hit-height-on-right x y slope)))
+
 (defn ball-lands-on-left [x y slope]
   (is-hit-height-inside (hit-height-on-left x y slope)))
 
 (defn ball-lands-on-right [x y slope]
   (is-hit-height-inside (hit-height-on-right x y slope)))
 
-(defn hit-point-on-left [x y slope]
-  (to-point (left-hit-width) (hit-height-on-left x y slope)))
+(defn ball-lands-on-bottom [x y slope]
+  (is-hit-width-inside (hit-width-on-bottom x y slope)))
+
 
 
 

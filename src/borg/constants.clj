@@ -26,3 +26,8 @@
   (and
     (>= height (bottom-hit-height))
     (<= height (top-hit-height))))
+
+(defn is-hit-width-inside [width]
+  (and
+    (>= width (left-hit-width))
+    (<= width (right-hit-width))))

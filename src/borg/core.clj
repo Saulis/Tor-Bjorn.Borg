@@ -84,11 +84,11 @@
 
 (defn foo-target-height []
   (if (> (count cached-data ) 2)
-    (if (ball-is-moving-right (previous-ball-position) (current-ball-position))
-      240
+    ;(if (ball-is-moving-right (previous-ball-position) (current-ball-position))
+      ;240
       (if (ball-is-close (current-ball-position))
       (- (landing-height (previous-ball-position) (current-ball-position)) 50) ;TODO
-      (landing-height (previous-ball-position) (current-ball-position))))
+      (landing-height (previous-ball-position) (current-ball-position)))
   200))
 
 (defn next-move [data]
