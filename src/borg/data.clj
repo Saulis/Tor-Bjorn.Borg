@@ -8,7 +8,6 @@
 (def ^:dynamic cached-data [])
 (def ^:dynamic sent-messages [])
 (def ^:dynamic previous-position)
-(def ^:dynamic target-height 240)
 
 (defn clear-data []
   (def cached-data []))
@@ -51,11 +50,7 @@
   ;(info (str "Target: " target-height))
   ;(if (> (count cached-data) 2)
     ;(info (str "Velocity: " (velocity (previous-ball-position) (current-ball-position) ))))
-  (def cached-data (conj cached-data data))
-  (if (> (count cached-data) 2)
-    (def target-height (new-target-height (previous-ball-position) (current-ball-position)))))
-
-
+  (def cached-data (conj cached-data data)))
 
 
 

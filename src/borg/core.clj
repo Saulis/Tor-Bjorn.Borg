@@ -87,8 +87,8 @@
     (if (ball-is-moving-right (previous-ball-position) (current-ball-position))
       240
       (if (ball-is-close (current-ball-position))
-      (- (new-target-height (previous-ball-position) (current-ball-position)) 50) ;TODO
-      (new-target-height (previous-ball-position) (current-ball-position))))
+      (- (landing-height (previous-ball-position) (current-ball-position)) 50) ;TODO
+      (landing-height (previous-ball-position) (current-ball-position))))
   200))
 
 (defn next-move [data]

@@ -58,26 +58,5 @@
 (defn ball-is-going-down [slope]
   (pos? slope))
 
-(declare landing-point)
 
-(defn landing-point-via-bottom [x y slope]
-  (landing-point (hit-width-on-bottom x y slope) (bottom-hit-height) (invert slope)))
 
-(defn landing-point-via-top [x y slope]
-  (landing-point (hit-width-on-top x y slope) (top-hit-height) (invert slope)))
-
-(defn landing-point-via-right [x y slope]
-  (landing-point (right-hit-width) (hit-height-on-right x y slope) (invert slope)))
-
-(defn landing-point-via-bounce [x y slope]
-    (if (ball-is-going-down slope)
-      (landing-point-via-bottom x y slope)
-      (landing-point-via-top x y slope)))
-
-(defn landing-point [x y slope]
-  (if (ball-lands-on-left x y slope)
-    (hit-point-on-left x y slope)
-    (landing-point-via-bounce x y slope)))
-
-(defn landing-height [x y slope]
-  (:y (landing-point x y slope)))
