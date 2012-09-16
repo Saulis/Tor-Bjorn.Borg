@@ -18,6 +18,9 @@
 (defn save-message [direction]
   (def sent-messages (conj sent-messages (struct time-direction (System/currentTimeMillis) direction))))
 
+(defn reset-direction []
+  (save-message 0)) ;TODO timestamp should be same as in last message
+
 (defn last-message []
   (last sent-messages))
 

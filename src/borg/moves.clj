@@ -11,7 +11,7 @@
   (- (target-height-with-paddle target-height) current-height))
 
 (defn- direction-to-target [target-height current-height]
-  (/ (distance-to-target target-height current-height) paddle-height))
+  (/ (distance-to-target target-height current-height) (/ paddle-height 2)))
 
 (defn- trim-max-direction [direction]
   (if (> direction max-direction)

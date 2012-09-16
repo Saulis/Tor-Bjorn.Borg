@@ -27,7 +27,9 @@
   (is (pos? (landing-height {:x 620.6255119707167, :y 413.1384143251785} {:x 636.2962115583583, :y 422.4917330408214})))
   )
 
-
+(deftest landing-height-lose-tests
+  (testing "games where bot has lost")
+  (is (= (landing-height {:x 50.71505801307194, :y 414.96447850893134} {:x 35.66877937164823, :y 403.1390382538271}) 391)))
 
 ;(deftest ball-lands-on-corners-from-corner-tests
 ;  (testing "making sure corner hits won't overlap functions")

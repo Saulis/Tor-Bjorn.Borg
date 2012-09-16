@@ -109,6 +109,7 @@
 
 (defn change-direction [conn]
   (save-message (new-direction))
+  (info (str "Direction: " (System/currentTimeMillis) " " (new-direction))) ;TODO debug
   (write conn (move (new-direction))))
 
 (defn current-direction []
@@ -131,12 +132,13 @@
 
 (defn start-playing [data]
   (info (str "Game started: " (nth data 0) " vs. " (nth data 1)))
-  (clear-data))
+  (clear-data)
+  (reset-direction))
 
 (defn handle-message [conn {msgType :msgType data :data}]
   (case msgType
     joined (info (str "Game joined successfully. Use following URL for visualization: " data))
-    gameStarted (info (str "Game started: " (nth data 0) " vs. " (nth data 1)))
+    gameStarted (start-playing data)
     gameIsOn (handle-data conn data)
     gameIsOver (info (str "Game ended. Winner: " data))
     error (error data)
