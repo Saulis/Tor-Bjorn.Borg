@@ -116,9 +116,10 @@
   (:direction (last-message)))
 
 (defn direction-is-changing []
-  (if (new-direction-is-accurate (last-three-ball-positions))
-    (not= (current-direction) (new-direction))
-    false))
+  (new-direction-is-accurate (last-three-ball-positions)))
+  ;(if (new-direction-is-accurate (last-three-ball-positions))
+;    (not= (current-direction) (new-direction))
+;    false))
 
 (defn it-is-time-to-change-direction []
   (and
@@ -132,8 +133,7 @@
 
 (defn start-playing [data]
   (info (str "Game started: " (nth data 0) " vs. " (nth data 1)))
-  (clear-data)
-  (reset-direction))
+  (clear-data))
 
 (defn handle-message [conn {msgType :msgType data :data}]
   (case msgType
