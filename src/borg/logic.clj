@@ -41,27 +41,31 @@
 (defn- landing-point-on-left-via-top [x y slope]
   (landing-point-on-left (hit-width-on-top x y slope) (top-hit-height) (invert slope)))
 
+(defn- landing-point-on-left-via-top-or-bottom [x y slope]
+  (if (ball-lands-on-bottom x y slope)
+    (landing-point-on-left-via-bottom x y slope)
+    (landing-point-on-left-via-top x y slope)))
+
+(defn- landing-point-on-left [x y slope]
+  (if (ball-lands-on-left x y slope)
+    (hit-point-on-left x y slope)
+    (landing-point-on-left-via-top-or-bottom x y slope)))
+
 (defn- landing-point-on-right-via-bottom [x y slope]
   (landing-point-on-right (hit-width-on-bottom x y slope) (bottom-hit-height) (invert slope)))
 
 (defn- landing-point-on-right-via-top [x y slope]
   (landing-point-on-right (hit-width-on-top x y slope) (top-hit-height) (invert slope)))
 
-
-(defn- landing-point-on-left-via-top-or-bottom [x y slope]
-  (if (ball-lands-on-bottom x y slope)
-    (landing-point-on-left-via-bottom x y slope)
-    (landing-point-on-left-via-top x y slope)))
-
 (defn- landing-point-on-right-via-top-or-bottom [x y slope]
   (if (ball-lands-on-bottom x y slope)
     (landing-point-on-right-via-bottom x y slope)
     (landing-point-on-right-via-top x y slope)))
 
-(defn- landing-point-on-left [x y slope]
-  (if (ball-lands-on-left x y slope)
-    (hit-point-on-left x y slope)
-    (landing-point-on-left-via-top-or-bottom x y slope)))
+(defn- landing-point-on-right [x y slope]
+  (if (ball-lands-on-right x y slope)
+    (hit-point-on-right x y slope)
+    (landing-point-on-right-via-top-or-bottom x y slope)))
 
 (defn- landing-point-on-left-via-right [x y slope]
   (landing-point-on-left (:x (landing-point-on-right x y slope)) (:y (landing-point-on-right x y slope)) (invert slope)))

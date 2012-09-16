@@ -35,4 +35,7 @@
 (deftest ball-lands-on-bottom-tests
   (is (true? (ball-lands-on-bottom (left-hit-width) (top-hit-height) -1)))
   (is (false? (ball-lands-on-bottom (left-hit-width) (top-hit-height) -480/640)))
-  (is (false? (ball-lands-on-bottom (left-hit-width) (top-hit-height) 1))))
+  (is (false? (ball-lands-on-bottom (left-hit-width) (top-hit-height) 1)))
+  (is (false? (ball-lands-on-bottom (left-hit-width) (bottom-hit-height) 1))) ;already on bottom
+  )
+
