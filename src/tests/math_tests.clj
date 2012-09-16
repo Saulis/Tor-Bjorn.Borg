@@ -39,3 +39,10 @@
   (is (false? (ball-lands-on-bottom (left-hit-width) (bottom-hit-height) 1))) ;already on bottom
   )
 
+(deftest ball-landings-bug-tests
+  (is (= (hit-height-on-right 636 422 9/16) 415))
+  (is (true? (ball-lands-on-right 636 422 9/16)))
+  (is (false? (ball-lands-on-bottom 636 422 9/16)))
+  (is (false? (ball-lands-on-top 636 422 9/16)))
+  )
+

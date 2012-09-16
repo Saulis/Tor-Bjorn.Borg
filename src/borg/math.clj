@@ -51,23 +51,23 @@
 (defn hit-point-on-right [x y slope]
   (to-point (right-hit-width) (hit-height-on-right x y slope)))
 
-(defn- is-not-already-on-the-left [x]
-  (> x (left-hit-width)))
+(defn- is-not-already-on-the-left-paddle [x]
+  (not= x (left-hit-width)))
 
 (defn ball-lands-on-left [x y slope]
   (and
-    (is-not-already-on-the-left x)
+    (is-not-already-on-the-left-paddle x)
     (is-hit-height-inside (hit-height-on-left x y slope))))
 
-(defn- is-not-already-on-the-right [x]
-  (< x (right-hit-width)))
+(defn- is-not-already-on-the-right-paddle [x]
+  (not= x (right-hit-width)))
 
 (defn ball-lands-on-right [x y slope]
   (and
-    (is-not-already-on-the-right x)
+    (is-not-already-on-the-right-paddle x)
     (is-hit-height-inside (hit-height-on-right x y slope))))
 
-(defn is-not-already-at-the-bottom [y]
+(defn- is-not-already-at-the-bottom [y]
   (> y (bottom-hit-height)))
 
 (defn ball-lands-on-bottom [x y slope]

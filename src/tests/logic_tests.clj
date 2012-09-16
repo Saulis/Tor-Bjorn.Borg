@@ -21,9 +21,13 @@
 ;  (is (= (landing-height (right-hit-width) (bottom-hit-height) -480/640) 20))) ;from corner to corner right to left
 
 (deftest landing-height-bug-tests
+  (testing "games where bot has crashed previously")
   (is (pos? (landing-height {:x 109.52451670545771, :y 371.66836747085847} {:x 129.16086527855018, :y 358.00311467753477})))
   (is (pos? (landing-height {:x 35.944477605908055, :y 139.73909717189375} {:x 50.743817428259156, :y 122.08013824877912})))
+  (is (pos? (landing-height {:x 620.6255119707167, :y 413.1384143251785} {:x 636.2962115583583, :y 422.4917330408214})))
   )
+
+
 
 ;(deftest ball-lands-on-corners-from-corner-tests
 ;  (testing "making sure corner hits won't overlap functions")
