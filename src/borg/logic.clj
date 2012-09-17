@@ -1,5 +1,5 @@
 (ns borg.logic
-  (:use borg.math
+  (:use borg.geometry
         borg.constants
         clojure.contrib.math))
 
@@ -88,3 +88,13 @@
   (if (ball-is-going-left p1 p2)
     (landing-height-on-left p1 p2)
     (landing-height-on-left-via-right p1 p2)))
+
+(defn- ball-is-close [ball-position]
+  (< (:x ball-position) 50))       ;TODO
+
+(defn target-height [data]
+  (if (> (count data ) 2)
+    (if (ball-is-close (current-ball-position data))
+      (- (landing-height (previous-ball-position data) (current-ball-position data)) 50) ;TODO
+      (landing-height (previous-ball-position data) (current-ball-position data)))
+    200))

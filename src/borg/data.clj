@@ -1,5 +1,5 @@
 (ns borg.data
-  (:use borg.math
+  (:use borg.geometry
         borg.moves))
 
 (defstruct time-direction :time :direction)
@@ -33,4 +33,7 @@
 
 (defn last-three-ball-positions [data]
   (take-last 3 (ball-positions data)))
+
+(defn current-height [data]
+  (:y (:left (last data))))
 

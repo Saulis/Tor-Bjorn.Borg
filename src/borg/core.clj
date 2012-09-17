@@ -4,7 +4,7 @@
         clojure.contrib.math
         borg.logic
         borg.data
-        borg.math
+        borg.geometry
         borg.constants
         borg.moves
         borg.messages)
@@ -20,21 +20,8 @@
     (.println (json-str data))
     (.flush)))
 
-(defn current-height [{left :left}]
-  (:y left))
-
-(defn ball-is-close [ball-position]
-  (< (:x ball-position) 50))       ;TODO
-
-(defn foo-target-height []
-  (if (> (count saved-data ) 2)
-      (if (ball-is-close (current-ball-position saved-data))
-      (- (landing-height (previous-ball-position saved-data) (current-ball-position saved-data)) 50) ;TODO
-      (landing-height (previous-ball-position saved-data) (current-ball-position saved-data)))
-  200))
-
 (defn new-direction []
-  (direction (foo-target-height) (current-height (last saved-data))))
+  (direction (target-height saved-data) (current-height saved-data)))
 
 (defn it-is-time-to-change-direction []
   (and

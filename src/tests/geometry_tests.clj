@@ -1,6 +1,6 @@
-(ns tests.math-tests
+(ns tests.geometry-tests
   (:use clojure.test
-        borg.math
+        borg.geometry
         borg.constants))
 
 (deftest slope-tests

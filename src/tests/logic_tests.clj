@@ -30,7 +30,7 @@
   (landing-height {:x 320 :y 240} p))
 
 (defn- points-for [x]
-  (for [y (range 5 474)]
+  (for [y (range 5 475)]
     {:x x :y y}))
 
 (defn- foo []
