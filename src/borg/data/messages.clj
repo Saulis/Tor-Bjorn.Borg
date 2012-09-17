@@ -1,4 +1,4 @@
-(ns borg.messages)
+(ns borg.data.messages)
 
 (defn nine-messages-have-not-been-sent [messages]
   (< (count messages) 9))

@@ -1,22 +1,12 @@
-(ns tests.logic-tests
-  (use clojure.test
-       borg.logic
-       borg.constants
-      clojure.tools.logging))
-
-(deftest new-direction-is-accurate-tests
-  (is (not (new-direction-is-accurate nil))) ;nil - false
-  (is (not (new-direction-is-accurate []))) ;empty - false
-  (is (not (new-direction-is-accurate [{:x 1 :y 2}]))) ;one position - false
-  (is (new-direction-is-accurate [{:x 1 :y 2} {:x 2 :y 4}])) ;two positions - true
-  (is (new-direction-is-accurate [{:x 1 :y 2} {:x 2 :y 4}, {:x 3 :y 6}])) ;three positions with steady slope - true
-  (is (not (new-direction-is-accurate [{:x 1 :y 2} {:x 2 :y 4}, {:x 13 :y 123}])))) ;three positions with unsteady slope - false
+(ns tests.logic.trajectories-tests
+  (:use clojure.test
+        borg.logic.trajectories))
 
 (deftest landing-height-tests
   (is (= (landing-height {:x 0 :y 240} {:x 200 :y 240}) 240.0)) ;straight across the field
   (is (= (landing-height {:x 0 :y 240} {:x 320 :y 480}) 251.25)) ;one top bounce left to right
   (is (= (landing-height {:x 0 :y 240} {:x 320 :y 0}) 228.75)) ;one bottom bounce left to right
-)
+  )
 
 (deftest landing-height-bug-tests
   (testing "games where bot has crashed previously")
@@ -26,7 +16,7 @@
   )
 
 (defn- test-landing-height [p]
-  (info p)
+  ;(info p)
   (landing-height {:x 320 :y 240} p))
 
 (defn- points-for [x]
@@ -37,5 +27,5 @@
   (map points-for (range 15 319)))
 
 
-(deftest crash-test
-  (info (map test-landing-height (foo))))
+;(deftest crash-test
+;  (info (map test-landing-height (foo))))

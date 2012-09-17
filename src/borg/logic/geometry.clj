@@ -1,4 +1,4 @@
-(ns borg.geometry
+(ns borg.logic.geometry
   (:use borg.constants))
 
 (defstruct point :x :y)
@@ -39,19 +39,19 @@
 (defn- hit-height [distance-to-x y slope]
   (+ (* slope distance-to-x) y))
 
-(defn- hit-height-on-left [x y slope]
+(defn hit-height-on-left [x y slope]
   (hit-height (distance-to-left-hit x) y slope))
 
-(defn- hit-height-on-right [x y slope]
+(defn hit-height-on-right [x y slope]
   (hit-height (distance-to-right-hit x) y slope))
 
 (defn- hit-width [x distance-to-y slope]
   (+ (/ distance-to-y slope) x))
 
-(defn- hit-width-on-top [x y slope]
+(defn hit-width-on-top [x y slope]
   (hit-width x (distance-to-top-hit y) slope))
 
-(defn- hit-width-on-bottom [x y slope]
+(defn hit-width-on-bottom [x y slope]
   (hit-width x (distance-to-bottom-hit y) slope))
 
 ;;; boundary hit points for left and right

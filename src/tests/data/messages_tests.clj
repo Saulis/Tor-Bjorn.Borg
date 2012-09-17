@@ -1,7 +1,7 @@
-(ns tests.messages-tests
+(ns tests.data.messages-tests
   (use clojure.test
-      borg.messages
-      borg.data))
+      borg.data.messages
+      borg.data.repository))
 
 (def nine-messages (range 9))
 (def ten-messages (range 10))

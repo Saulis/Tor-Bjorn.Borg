@@ -1,17 +1,19 @@
-(ns borg.moves
-    (:use borg.constants))
+(ns borg.logic.direction
+  (:use borg.constants))
 
 (def min-direction -1.0)
 (def max-direction 1.0)
+(def distance-to-target-factor (/ paddle-height 2)) ;;; smaller factor makes acceleration sharper - larger factor makes it smoother (and longer)
+(def target-height-offset 3) ;;; defines the relative position of the paddle on the target height
 
 (defn- target-height-with-paddle [target-height]
-  (- target-height 3)) ;TODO
+  (- target-height target-height-offset))
 
 (defn- distance-to-target [target-height current-height]
   (- (target-height-with-paddle target-height) current-height))
 
 (defn- direction-to-target [target-height current-height]
-  (/ (distance-to-target target-height current-height) (/ paddle-height 2)))
+  (/ (distance-to-target target-height current-height) distance-to-target-factor))
 
 (defn- trim-max-direction [direction]
   (if (> direction max-direction)

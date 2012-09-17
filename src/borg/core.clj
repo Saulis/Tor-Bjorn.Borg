@@ -1,13 +1,11 @@
 (ns borg.core
   (:use [clojure.data.json :only (read-json json-str)]
         [clojure.tools.logging :only (info error)]
-        clojure.contrib.math
-        borg.logic
-        borg.data
-        borg.geometry
-        borg.constants
-        borg.moves
-        borg.messages)
+        borg.data.repository
+        borg.data.parser
+        borg.data.messages
+        borg.logic.strategy
+        borg.logic.direction)
   (:import [java.net Socket]
            [java.io PrintWriter InputStreamReader BufferedReader])
   (:gen-class :main true))
@@ -23,21 +21,21 @@
 (defn new-direction []
   (direction (target-height saved-data) (current-height saved-data)))
 
-(defn it-is-time-to-change-direction []
+(defn it-is-time-to-send-direction-message []
   (and
-    (new-direction-is-accurate (last-three-ball-positions saved-data))
+    (direction-is-accurate (last-three-ball-positions saved-data))
     (nine-messages-have-not-been-sent-under-one-second saved-messages)))
 
-(defn change-direction [conn]
+(defn send-direction-message [conn]
   (save-message (new-direction))
-  (info (str "Direction: " (System/currentTimeMillis) " " (new-direction))) ;TODO debug
+  (info (str "Direction: " (System/currentTimeMillis) " " (new-direction))) ;debug
   (write conn (move-to (new-direction))))
 
 (defn handle-data [conn data]
-  (info data) ;TODO debug
+  (info data) ;debug
   (save-data data)
-  (if (it-is-time-to-change-direction)
-    (change-direction conn)))
+  (if (it-is-time-to-send-direction-message)
+    (send-direction-message conn)))
 
 (defn start-playing [data]
   (info (str "Game started: " (nth data 0) " vs. " (nth data 1)))

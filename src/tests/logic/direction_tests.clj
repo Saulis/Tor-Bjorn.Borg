@@ -1,6 +1,6 @@
-(ns tests.moves-tests
-  (use clojure.test
-       borg.moves))
+(ns tests.logic.direction-tests
+  (:use clojure.test
+        borg.logic.direction))
 
 (deftest direction-tests
   (is (= (direction 100 0) -1.0))

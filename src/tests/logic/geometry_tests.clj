@@ -1,9 +1,10 @@
-(ns tests.geometry-tests
+(ns tests.logic.geometry-tests
   (:use clojure.test
-        borg.geometry
+        borg.logic.geometry
         borg.constants))
 
 (deftest slope-tests
+  (is (= (slope (to-point 5 0) (to-point 5 5 )) 666)) ;;; TODO
   (is (= (slope (to-point 0 0) (to-point 5 5 )) 1))
   (is (= (slope (to-point 0 0) (to-point -5 -5 )) 1))
   (is (= (slope (to-point 0 0) (to-point -5 5 )) -1)))

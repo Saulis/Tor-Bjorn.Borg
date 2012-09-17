@@ -1,9 +1,5 @@
 (ns borg.constants)
 
-(def ball-velocity 100)
-(def court-height 480)
-(def court-width 640)
-
 (def max-width 640)
 (def max-height 480)
 (def ball-radius 5)
