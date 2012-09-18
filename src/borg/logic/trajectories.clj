@@ -1,6 +1,6 @@
 (ns borg.logic.trajectories
   (:use borg.constants
-        borg.geometry))
+        borg.logic.geometry))
 
 (declare landing-point-on-left)
 (declare landing-point-on-right)

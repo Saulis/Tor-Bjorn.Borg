@@ -1,5 +1,5 @@
 (ns borg.logic.strategy
-  (:use borg.geometry
+  (:use borg.logic.geometry
         borg.logic.trajectories
         borg.data.parser
         clojure.contrib.math))
