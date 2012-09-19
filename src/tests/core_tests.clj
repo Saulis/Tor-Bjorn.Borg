@@ -18,4 +18,4 @@
   (is (not (empty? (:data (parse-message "foobar")))))
   )
 
-(-main (str "Tor-Bjorn.Borg") (str "boris.helloworldopen.fi") (str "9090") (str "testing"))
+(-main (str "Tor-Bjorn.Borg") (str "boris.helloworldopen.fi") (str "9090"))

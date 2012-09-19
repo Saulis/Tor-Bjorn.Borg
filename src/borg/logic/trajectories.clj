@@ -32,7 +32,7 @@
     (landing-point-on-right-via-bottom x y slope)
     (landing-point-on-right-via-top x y slope)))
 
-(defn- landing-point-on-right [x y slope]
+(defn landing-point-on-right [x y slope]
   (if (ball-lands-on-right x y slope)
     (hit-point-on-right x y slope)
     (landing-point-on-right-via-top-or-bottom x y slope)))
@@ -45,6 +45,10 @@
     (hit-point-on-right x y slope)
     (landing-point-on-right-via-top-or-bottom x y slope)))
 
+(defn landing-height-on-right [x y slope]
+  (:y (landing-point-on-right x y slope)))
+
+
 (defn- landing-height-on-left [p1 p2]
   (:y (landing-point-on-left (:x p2) (:y p2) (slope p1 p2))))
 
@@ -53,6 +57,12 @@
 
 (defn- ball-is-going-left [p1 p2]
   (> (:x p1) (:x p2)))
+
+(defn ball-lands-near-upper-corner [landing-height]
+  (<= landing-height paddle-height))
+
+(defn ball-lands-near-lower-corner [landing-height]
+  (>= landing-height (- max-height paddle-height)))
 
 (defn landing-height [p1 p2]
   (if (ball-is-going-left p1 p2)

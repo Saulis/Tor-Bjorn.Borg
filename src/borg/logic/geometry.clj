@@ -71,10 +71,10 @@
   (not= x (right-hit-width)))
 
 (defn- is-not-already-at-the-bottom [y]
-  (> y (bottom-hit-height)))
+  (< y (bottom-hit-height)))
 
 (defn- is-not-already-at-the-top [y]
-  (< y (top-hit-height)))
+  (> y (top-hit-height)))
 
 ;;; landing height and width calculation for each boundary
 
