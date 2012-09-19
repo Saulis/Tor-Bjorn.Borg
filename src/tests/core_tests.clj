@@ -7,7 +7,7 @@
 
 (deftest start-playing-clears-saved-data
   (is (empty? saved-data))
-  (save-data data)
+  (save-data "foo")
   (is (not (empty? saved-data)))
   (start-playing ["JohnMcEnroe", "BorisBecker"])
   (is (empty? saved-data))
@@ -18,4 +18,4 @@
   (is (not (empty? (:data (parse-message "foobar")))))
   )
 
-;(-main (str "Tor-Bjorn.Borg") (str "boris.helloworldopen.fi") (str "9090"))
+(-main (str "Tor-Bjorn.Borg") (str "boris.helloworldopen.fi") (str "9090") (str "testing"))

@@ -72,7 +72,13 @@
     (doto (Thread. #(conn-handler conn)) (.start))
     conn))
 
-(defn -main [team-name hostname port]
+(defn -main
+  ([team-name opponent-name hostname port]
+  (let [s (connect {:name hostname :port (read-string port)})
+        join-message {:msgType "requestDuel" :data [team-name opponent-name]}]
+    (write s join-message)))
+
+  ([team-name hostname port]
   (let [s (connect {:name hostname :port (read-string port)})
         join-message {:msgType "join" :data team-name}]
-    (write s join-message)))
+    (write s join-message))))
