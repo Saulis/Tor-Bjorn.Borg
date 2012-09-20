@@ -17,3 +17,6 @@
 
 (defn current-height [data]
   (:y (:left (last data))))
+
+(defn current-opponent-height [data]
+  (:y (:right (last data))))
