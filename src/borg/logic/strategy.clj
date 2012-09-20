@@ -48,12 +48,19 @@
   ;(info {:slope (invert modified-slope) :height height}) ;TODO
   (- max-height height)))
 
-(defn- distances-to-lower-corner [current-slope landing-height]
-  (for [f offset-factors]
-    {:factor f :distance (distance-to-lower-corner (modify-slope f current-slope) landing-height) }))
+(defn- distance-to-upper-corner [modified-slope landing-height]
+  (landing-height-on-right (left-hit-width) landing-height (invert modified-slope)))
 
-(defn- offset-factor-with-smallest-distance-to-lower-corner [current-slope landing-height]
-  (let [distances (distances-to-lower-corner current-slope landing-height)]
+(defn- shortest-distance-to-corner [modified-slope landing-height]
+  (min (distance-to-lower-corner modified-slope landing-height)
+       (distance-to-upper-corner modified-slope landing-height)))
+
+(defn- distances-to-corners [current-slope landing-height]
+  (for [f offset-factors]
+    {:factor f :distance (shortest-distance-to-corner (modify-slope f current-slope) landing-height) }))
+
+(defn- offset-factor-with-shortest-distance-to-corner [current-slope landing-height]
+  (let [distances (distances-to-corners current-slope landing-height)]
   ;(info (:factor (first (sort-by :distance distances))))     ;TODO DEBUG
   (:factor (first (sort-by :distance distances)))))
 
@@ -62,7 +69,7 @@
   ;(info (str "Selected factor: " factor)
 ;    " Slope: " (invert (modify-slope factor current-slope))
 ;    " Landing: " (landing-height-on-right (left-hit-width) landing-height (invert (modify-slope factor current-slope)))))
-  (* paddle-height (offset-factor-with-smallest-distance-to-lower-corner current-slope landing-height)))
+  (* paddle-height (offset-factor-with-shortest-distance-to-corner current-slope landing-height)))
   ;(* paddle-height -2/7))
 
 (defn- ball-lands-near-corners [landing-height]
