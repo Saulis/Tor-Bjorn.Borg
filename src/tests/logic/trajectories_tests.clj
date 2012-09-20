@@ -15,34 +15,3 @@
   (is (pos? (landing-height {:x 620.6255119707167, :y 413.1384143251785} {:x 636.2962115583583, :y 422.4917330408214})))
   )
 
-(deftest ball-lands-near-upper-corner-tests
-  (is (true? (ball-lands-near-upper-corner 640)))
-  (is (true? (ball-lands-near-upper-corner 635)))
-  (is (true? (ball-lands-near-upper-corner 615)))
-  (is (false? (ball-lands-near-upper-corner 614)))
-  (is (false? (ball-lands-near-upper-corner 0)))
-  )
-
-(deftest ball-lands-near-upper-corner-tests
-  (is (true? (ball-lands-near-upper-corner 0)))
-  (is (true? (ball-lands-near-upper-corner 5)))
-  (is (true? (ball-lands-near-upper-corner 25)))
-  (is (false? (ball-lands-near-upper-corner 26)))
-  (is (false? (ball-lands-near-upper-corner 640)))
-  )
-
-
-(defn- test-landing-height [p]
-  ;(info p)
-  (landing-height {:x 320 :y 240} p))
-
-(defn- points-for [x]
-  (for [y (range 5 475)]
-    {:x x :y y}))
-
-(defn- foo []
-  (map points-for (range 15 319)))
-
-
-;(deftest crash-test
-;  (info (map test-landing-height (foo))))

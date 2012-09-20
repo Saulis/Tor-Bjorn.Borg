@@ -98,6 +98,13 @@
     (is-not-already-at-the-top y)
     (is-hit-width-inside (hit-width-on-top x y slope))))
 
+(defn ball-lands-near-upper-corner [landing-height]
+  (<= landing-height paddle-height))
+
+(defn ball-lands-near-lower-corner [landing-height]
+  (>= landing-height (- max-height paddle-height)))
+
+
 
 
 

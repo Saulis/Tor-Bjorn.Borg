@@ -39,6 +39,29 @@
   (is (false? (ball-lands-on-bottom (left-hit-width) (bottom-hit-height) 1))) ;already on bottom
   )
 
+(deftest ball-lands-on-top-tests
+  (is (true? (ball-lands-on-top (left-hit-width) (bottom-hit-height) -1)))
+  (is (false? (ball-lands-on-top (left-hit-width) (bottom-hit-height) -480/640)))
+  (is (false? (ball-lands-on-top (left-hit-width) (bottom-hit-height) 1)))
+  (is (false? (ball-lands-on-top (left-hit-width) (top-hit-height) 1))) ;already on bottom
+  )
+
+(deftest ball-lands-near-upper-corner-tests
+  (is (true? (ball-lands-near-upper-corner 640)))
+  (is (true? (ball-lands-near-upper-corner 635)))
+  (is (true? (ball-lands-near-upper-corner 615)))
+  (is (false? (ball-lands-near-upper-corner 614)))
+  (is (false? (ball-lands-near-upper-corner 0)))
+  )
+
+(deftest ball-lands-near-upper-corner-tests
+  (is (true? (ball-lands-near-upper-corner 0)))
+  (is (true? (ball-lands-near-upper-corner 5)))
+  (is (true? (ball-lands-near-upper-corner 25)))
+  (is (false? (ball-lands-near-upper-corner 26)))
+  (is (false? (ball-lands-near-upper-corner 640)))
+  )
+
 (deftest ball-landings-bug-tests
   (is (true? (ball-lands-on-right 636 422 9/16)))
   (is (false? (ball-lands-on-bottom 636 422 9/16)))
