@@ -64,11 +64,17 @@
   (* paddle-height (offset-factor-with-shortest-distance-to-corner current-slope landing-height)))
 ;(* paddle-height -2/7))
 
+(defn- slope-is-too-large [slope]
+ (> (abs slope) 3))
+
 (defn- ball-lands-near-corners [landing-height]
   (or (ball-lands-near-upper-corner landing-height)
     (ball-lands-near-lower-corner landing-height)))
 
 (defn landing-height-with-offset [previous-ball-position current-ball-position landing-height opponent-height]
-  (if (ball-lands-near-corners landing-height)
+  (let [slope (slope previous-ball-position current-ball-position)]
+  (if (or 
+	(slope-is-too-large slope)
+	(ball-lands-near-corners landing-height))
     landing-height
-    (+ landing-height (target-height-offset (slope previous-ball-position current-ball-position) landing-height opponent-height))))
+    (+ landing-height (target-height-offset slope landing-height opponent-height)))))
