@@ -20,6 +20,9 @@
 (defn slope [p1 p2]
   (/ (y-delta p1 p2) (x-delta p1 p2)))
 
+(defn attack-slope [factor current-slope]
+  (+ current-slope (* 5/7 factor))) ;;; 5/7 is the magic number here!
+
 ;;; distance to boundary hit calculation
 
 (defn- distance-to-left-hit [x]

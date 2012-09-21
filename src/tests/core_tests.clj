@@ -3,8 +3,6 @@
         borg.data.repository
         clojure.test))
 
-;TODO handle-data tests with mocked conn?
-
 (deftest start-playing-clears-saved-data
   (is (empty? saved-data))
   (save-data "foo")
