@@ -29,6 +29,7 @@
 (defn send-direction-message [conn]
   (save-message (new-direction saved-data))
   (println (str "Direction: " (System/currentTimeMillis) " " (new-direction saved-data))) ;debug
+  (println (str (- (System/currentTimeMillis) (:time (first saved-messages))) " millis since 1/" (count saved-messages) "th message."))
   (write conn (move-to (new-direction saved-data))))
 
 (defn handle-data [conn data]
