@@ -23,11 +23,20 @@
 
 (defn- distances-to-corners [current-slope landing-height]
   (for [f offset-factors]
-    {:factor f :distance (shortest-distance-to-corner (modify-slope f current-slope) landing-height) }))
+	(let [slope (modify-slope f current-slope)]
+    {:factor f :distance (shortest-distance-to-corner slope landing-height) :slope slope })))
+	
+(defn- with-good-slope [x]
+	(<= (abs (:slope x)) 1))
+	
+(defn- distances-to-corners-with-good-slope [current-slope landing-height]
+	(filter with-good-slope (distances-to-corners current-slope landing-height)))
 
 (defn- offset-factor-with-shortest-distance-to-corner [current-slope landing-height]
-  (let [distances (distances-to-corners current-slope landing-height)]
-    (:factor (first (sort-by :distance distances)))))
+  (let [distances (distances-to-corners-with-good-slope current-slope landing-height)]
+  (if (empty? distances)
+	(:factor (first (sort-by :distance (distances-to-corners current-slope landing-height))))
+    (:factor (first (sort-by :distance distances))))))
 
 (defn- landing-height-on-opponents-side [modified-slope landing-height]
   (landing-height-on-right (left-hit-width) landing-height (invert modified-slope)))
