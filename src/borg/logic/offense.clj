@@ -52,7 +52,7 @@
   ;(info (str "Selected factor: " factor)
   ;    " Slope: " (invert (modify-slope factor current-slope))
   ;    " Landing: " (landing-height-on-right (left-hit-width) landing-height (invert (modify-slope factor current-slope)))))
-  (* paddle-height (offset-factor-with-longest-distance-to-opponent current-slope landing-height opponent-height)))
+  (* paddle-height (offset-factor-with-shortest-distance-to-corner current-slope landing-height)))
 ;(* paddle-height -2/7))
 
 (defn- ball-lands-near-corners [landing-height]
