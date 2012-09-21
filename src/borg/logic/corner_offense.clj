@@ -1,7 +1,8 @@
 (ns borg.logic.corner-offense
   (:use borg.constants
         borg.logic.geometry
-        borg.logic.trajectories))
+        borg.logic.trajectories
+        clojure.contrib.math))
 
 (defn- distance-to-lower-corner [attack-slope landing-height]
   (let [height (landing-height-on-right (left-hit-width) landing-height (invert attack-slope))]
