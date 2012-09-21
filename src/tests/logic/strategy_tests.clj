@@ -17,3 +17,10 @@
   (is (= (target-height [0])) mid-height)
   (is (= (target-height [0 1])) mid-height)
   )
+
+(def game-data-1 [{:time 1348244790110, :left {:y 344.10063065067453, :playerName "Saulis"}, :right {:y 40.6829479057853, :playerName "karp"}, :ball {:pos {:x 413.033371709369, :y 135.996419031424}}}
+                  {:time 1348244790260, :left {:y 333.0008943729551, :playerName "Saulis"}, :right {:y 54.6829479057853, :playerName "karp"}, :ball {:pos {:x 356.4251060866989, :y 169.6717361090724}}}
+                  {:time 1348244790350, :left {:y 328.56509480188856, :playerName "Saulis"}, :right {:y 64.6829479057853, :playerName "karp"}, :ball {:pos {:x 315.99063064193456, :y 193.7255340216784}}}])
+
+(deftest game-tests
+  (is (= (target-height game-data-1) -1)))

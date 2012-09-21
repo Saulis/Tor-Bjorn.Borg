@@ -18,8 +18,8 @@
     (.println (json-str data))
     (.flush)))
 
-(defn new-direction []
-  (direction (target-height saved-data) (current-height saved-data)))
+(defn new-direction [data]
+  (direction (target-height data) (current-height data)))
 
 (defn it-is-time-to-send-direction-message []
   (and
@@ -27,12 +27,12 @@
     (nine-messages-have-not-been-sent-under-one-second saved-messages)))
 
 (defn send-direction-message [conn]
-  (save-message (new-direction))
-  (info (str "Direction: " (System/currentTimeMillis) " " (new-direction))) ;debug
-  (write conn (move-to (new-direction))))
+  (save-message (new-direction saved-data))
+  (println (str "Direction: " (System/currentTimeMillis) " " (new-direction saved-data))) ;debug
+  (write conn (move-to (new-direction saved-data))))
 
 (defn handle-data [conn data]
-  (info data) ;debug
+  (println (str "Data: " data)) ;debug
   (save-data data)
   (if (it-is-time-to-send-direction-message)
     (send-direction-message conn)))

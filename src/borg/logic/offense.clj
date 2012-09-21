@@ -56,7 +56,7 @@
     ;(info (:factor (first (sort-by :distance distances))))     ;TODO DEBUG
     (:factor (last (sort-by :distance distances)))))
 
-(defn- target-height-offset [current-slope landing-height opponent-height]
+(defn- landing-height-offset [current-slope landing-height]
   ;(let [factor (offset-factor-with-smallest-distance-to-lower-corner current-slope landing-height)]
   ;(info (str "Selected factor: " factor)
   ;    " Slope: " (invert (modify-slope factor current-slope))
@@ -64,17 +64,30 @@
   (* paddle-height (offset-factor-with-shortest-distance-to-corner current-slope landing-height)))
 ;(* paddle-height -2/7))
 
-(defn- slope-is-too-large [slope]
+(defn- slope-is-getting-too-vertical [slope]
  (> (abs slope) 3))
 
-(defn- ball-lands-near-corners [landing-height]
-  (or (ball-lands-near-upper-corner landing-height)
-    (ball-lands-near-lower-corner landing-height)))
+(defn- it-is-time-to-defense [previous-ball-position current-ball-position]
+  (slope-is-getting-too-vertical (slope previous-ball-position current-ball-position)))
 
-(defn landing-height-with-offset [previous-ball-position current-ball-position landing-height opponent-height]
-  (let [slope (slope previous-ball-position current-ball-position)]
-  (if (or 
-	(slope-is-too-large slope)
-	(ball-lands-near-corners landing-height))
-    landing-height
-    (+ landing-height (target-height-offset slope landing-height opponent-height)))))
+(defn- trim-landing-height-lower-end [landing-height]
+  (if (> landing-height (- max-height half-paddle-height))
+    (- max-height half-paddle-height)
+    landing-height))
+
+(defn- trim-landing-height-upper-end [landing-height]
+  (if (< landing-height half-paddle-height)
+    half-paddle-height
+    landing-height))
+
+(defn- trim-landing-height [landing-height]
+  (trim-landing-height-upper-end (trim-landing-height-lower-end landing-height)))
+
+(defn- landing-height-with-offset [previous-ball-position current-ball-position landing-height]
+  (+ landing-height (landing-height-offset (slope previous-ball-position current-ball-position) landing-height)))
+
+(defn trimmed-landing-height-with-offset [previous-ball-position current-ball-position landing-height]
+  (if (it-is-time-to-defense previous-ball-position current-ball-position)
+    (trim-landing-height landing-height)
+    (trim-landing-height (landing-height-with-offset previous-ball-position current-ball-position landing-height))))
+

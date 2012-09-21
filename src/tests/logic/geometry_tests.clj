@@ -68,3 +68,6 @@
   (is (false? (ball-lands-on-top 636 422 9/16)))
   )
 
+(deftest hit-width-tests
+  (is (pos? (hit-width-on-bottom 123 123 0)))) ;;; 0 slope
+

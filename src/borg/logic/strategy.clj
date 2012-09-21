@@ -6,7 +6,7 @@
         borg.logic.offense
         clojure.contrib.math))
 
-(def slope-difference-threshold 0.5) ;;; maximum difference of slopes (to be considered equal) between two consecutive pairs of positions
+(def slope-difference-threshold 0.05) ;;; maximum difference of slopes (to be considered equal) between two consecutive pairs of positions
 
 (defn- there-are-enough-positions-to-estimate-direction [ball-positions]
   (> (count ball-positions) 2))
@@ -40,7 +40,6 @@
   (if (previous-position-exists data)
     (let [ previous-position (previous-ball-position data)
            current-position (current-ball-position data)
-           current-landing-height (landing-height previous-position current-position)
-           current-opponent-height (current-opponent-height data)]
-    (landing-height-with-offset previous-position current-position current-landing-height current-opponent-height))
+           current-landing-height (landing-height previous-position current-position)]
+    (trimmed-landing-height-with-offset previous-position current-position current-landing-height))
     mid-height))
