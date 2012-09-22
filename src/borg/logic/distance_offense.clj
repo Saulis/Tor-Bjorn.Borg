@@ -4,26 +4,28 @@
         borg.logic.trajectories
         clojure.contrib.math))
 
-(defn- with-good-slope [x]
-  (<= (abs (:slope x)) (/ max-width max-height)))
-
 (defn- landing-height-on-opponents-side [attack-slope landing-height]
   (landing-height-on-right (left-hit-width) landing-height (invert attack-slope)))
 
 (defn- distance-to-opponent [attack-slope landing-height opponent-height]
   (abs (- (landing-height-on-opponents-side attack-slope landing-height) opponent-height)))
 
-(defn- distances-to-opponent [factors current-slope landing-height opponent-height]
-  (for [f factors]
+(defn- distances-to-opponent [attack-factors current-slope landing-height opponent-height]
+  (for [f attack-factors]
     (let [attack-slope (attack-slope f current-slope)]
       {:factor f :distance (distance-to-opponent attack-slope landing-height opponent-height) :slope attack-slope })))
 
-(defn- distances-to-opponent-with-good-slope [factors current-slope landing-height opponent-height]
-  (filter with-good-slope (distances-to-opponent factors current-slope landing-height opponent-height)))
+(defn- with-fast-slope [x]
+  (<= (abs (:slope x)) 3/2)) ;;; using 3/2 for distance offense - magic number by empiric testing
 
-(defn longest-distance-to-opponent [factors current-slope landing-height opponent-height]
-  (let [distances (distances-to-opponent-with-good-slope factors current-slope landing-height opponent-height)]
-    (if (empty? distances)
-      (last (sort-by :distance (distances-to-opponent factors current-slope landing-height opponent-height)))
-      (last (sort-by :distance distances)))))
+;;; filtering out attacks with poor slopes to emphasize faster shots
+
+(defn- distances-to-opponent-with-fast-slope [attack-factors current-slope landing-height opponent-height]
+  (filter with-fast-slope (distances-to-opponent attack-factors current-slope landing-height opponent-height)))
+
+(defn longest-distance-to-opponent [attack-factors current-slope landing-height opponent-height]
+  (let [distances-with-fast-slope (distances-to-opponent-with-fast-slope attack-factors current-slope landing-height opponent-height)]
+    (if (empty? distances-with-fast-slope)
+      (last (sort-by :distance (distances-to-opponent attack-factors current-slope landing-height opponent-height)))
+      (last (sort-by :distance distances-with-fast-slope)))))
 

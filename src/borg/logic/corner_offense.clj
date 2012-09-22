@@ -5,30 +5,32 @@
         clojure.contrib.math))
 
 (defn- distance-to-lower-corner [attack-slope landing-height]
-  (let [height (landing-height-on-right (left-hit-width) landing-height (invert attack-slope))]
-    (- max-height height)))
+    (- max-height (landing-height-on-right (left-hit-width) landing-height (invert attack-slope))))
 
 (defn- distance-to-upper-corner [attack-slope landing-height]
   (landing-height-on-right (left-hit-width) landing-height (invert attack-slope)))
 
 (defn- distance-to-nearest-corner [attack-slope landing-height]
-  (min (distance-to-lower-corner attack-slope landing-height)
+  (min
+    (distance-to-lower-corner attack-slope landing-height)
     (distance-to-upper-corner attack-slope landing-height)))
 
-(defn- distances-to-corners [factors current-slope landing-height]
-  (for [f factors]
+(defn- distances-to-corners [attack-factors current-slope landing-height]
+  (for [f attack-factors]
     (let [attack-slope (attack-slope f current-slope)]
       {:factor f :distance (distance-to-nearest-corner attack-slope landing-height) :slope attack-slope })))
 
-(defn- with-good-slope [x]
-  (<= (abs (:slope x)) (/ max-width max-height)))
+(defn- with-fast-slope [x]
+  (<= (abs (:slope x)) 3/2)) ;;; using 3/2 for corner offense - magic number by empiric testing
 
-(defn- distances-to-corners-with-good-slope [factors current-slope landing-height]
-  (filter with-good-slope (distances-to-corners factors current-slope landing-height)))
+;;; filtering out attacks with poor slopes to emphasize faster shots
 
-(defn shortest-distance-to-corner [factors current-slope landing-height]
-  (let [distances (distances-to-corners-with-good-slope factors current-slope landing-height)]
-    (if (empty? distances)
-      (first (sort-by :distance (distances-to-corners factors current-slope landing-height)))
-      (first (sort-by :distance distances)))))
+(defn- distances-to-corners-with-fast-slope [attack-factors current-slope landing-height]
+  (filter with-fast-slope (distances-to-corners attack-factors current-slope landing-height)))
+
+(defn shortest-distance-to-corner [attack-factors current-slope landing-height]
+  (let [distances-with-fast-slope (distances-to-corners-with-fast-slope attack-factors current-slope landing-height)]
+    (if (empty? distances-with-fast-slope)
+      (first (sort-by :distance (distances-to-corners attack-factors current-slope landing-height)))
+      (first (sort-by :distance distances-with-fast-slope)))))
 
