@@ -18,6 +18,7 @@
   (def mid-height (/ max-height 2))
   (def half-paddle-height (/ paddle-height 2)))
 
+;;; calculates the heights and widths where the ball actually makes contact
 
 (defn bottom-hit-height []
   (- max-height ball-radius))
@@ -30,6 +31,8 @@
 
 (defn right-hit-width []
   (- max-width (+ paddle-width ball-radius)))
+
+;;; checking if heights and widths are inside court boundaries
 
 (defn is-hit-height-inside [height]
   (and
