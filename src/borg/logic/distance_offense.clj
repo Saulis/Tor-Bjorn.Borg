@@ -4,11 +4,16 @@
         borg.logic.trajectories
         clojure.contrib.math))
 
+(defn opponent-height-offset [] (/ paddle-height 2)) ;;; defines the relative position of the paddle on the opponent height
+
 (defn- landing-height-on-opponents-side [attack-slope landing-height]
   (landing-height-on-right (left-hit-width) landing-height (invert attack-slope)))
 
+(defn- opponent-height-with-offset [opponent-height]
+  (- opponent-height (opponent-height-offset)))
+
 (defn- distance-to-opponent [attack-slope landing-height opponent-height]
-  (abs (- (landing-height-on-opponents-side attack-slope landing-height) opponent-height)))
+  (abs (- (landing-height-on-opponents-side attack-slope landing-height) (opponent-height-with-offset opponent-height))))
 
 (defn- distances-to-opponent [attack-factors current-slope landing-height opponent-height]
   (for [f attack-factors]
