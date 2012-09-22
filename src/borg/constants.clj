@@ -6,8 +6,8 @@
 (def paddle-width 10)
 (def paddle-height 50)
 
-(def mid-height)
-(def half-paddle-height)
+(def mid-height (/ max-height 2))
+(def half-paddle-height (/ paddle-height 2))
 
 (defn update-constants [{conf :conf}]
   (def max-width (:maxWidth conf))
