@@ -3,17 +3,17 @@
 
 (def min-direction -1.0)
 (def max-direction 1.0)
-(def distance-to-target-factor (/ paddle-height 2)) ;;; smaller factor makes acceleration sharper - larger factor makes it smoother (and longer)
-(def target-height-offset (/ paddle-height 2)) ;;; defines the relative position of the paddle on the target height
+(defn distance-to-target-factor [] (/ paddle-height 2)) ;;; smaller factor makes acceleration sharper - larger factor makes it smoother (and longer)
+(defn target-height-offset [] (/ paddle-height 2)) ;;; defines the relative position of the paddle on the target height
 
 (defn- target-height-with-paddle [target-height]
-  (- target-height target-height-offset))
+  (- target-height (target-height-offset)))
 
 (defn- distance-to-target [target-height current-height]
   (- (target-height-with-paddle target-height) current-height))
 
 (defn- direction-to-target [target-height current-height]
-  (/ (distance-to-target target-height current-height) distance-to-target-factor))
+  (/ (distance-to-target target-height current-height) (distance-to-target-factor)))
 
 (defn- trim-max-direction [direction]
   (if (> direction max-direction)

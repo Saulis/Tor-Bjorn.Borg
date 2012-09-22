@@ -1,6 +1,7 @@
 (ns borg.core
   (:use [clojure.data.json :only (read-json json-str)]
         [clojure.tools.logging :only (info error)]
+        borg.constants
         borg.data.repository
         borg.data.parser
         borg.data.messages
@@ -35,6 +36,7 @@
 (defn handle-data [conn data]
   (println (str "Data: " data)) ;debug
   (save-data data)
+  (update-constants data)
   (if (it-is-time-to-send-direction-message)
     (send-direction-message conn)))
 
