@@ -9,7 +9,11 @@
   (is (not (direction-is-accurate [{:x 1 :y 2}]))) ;one position - false
   (is (direction-is-accurate [{:x 1 :y 2} {:x 2 :y 4}])) ;two positions - true
   (is (direction-is-accurate [{:x 1 :y 2} {:x 2 :y 4}, {:x 3 :y 6}])) ;three positions with steady slope - true
-  (is (not (direction-is-accurate [{:x 1 :y 2} {:x 2 :y 4}, {:x 13 :y 123}])))) ;three positions with unsteady slope - false
+  (is (not (direction-is-accurate [{:x 1 :y 2} {:x 2 :y 4}, {:x 13 :y 123}]))) ;three positions with unsteady slope - false
+  (is (not (direction-is-accurate [{:x 1 :y 2} {:x 1 :y 3} {:x 2 :y 4}]))) ; invalid slope with three points
+  (is (not (direction-is-accurate [{:x 1 :y 2} {:x 2 :y 3} {:x 2 :y 4}]))) ; invalid slope with three points
+  (is (not (direction-is-accurate [{:x 1 :y 2} {:x 1 :y 4}]))) ; invalid slope with three points
+)
 
 (deftest target-height-tests
   (is (= (target-height nil)) mid-height)

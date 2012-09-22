@@ -8,14 +8,16 @@
 
 (def slope-difference-threshold 0.05) ;;; maximum difference of slopes (to be considered equal) between two consecutive pairs of positions
 
-(defn- there-are-enough-positions-to-estimate-direction [ball-positions]
+(defn- there-are-more-than-two-positions [ball-positions]
   (> (count ball-positions) 2))
 
 (defn- previous-position-exists [data]
   (>= (count data) 2))
 
-(defn- there-are-only-two-positions [ball-positions]
-  (= (count ball-positions) 2))
+(defn- slope-can-be-calculated-from-two-positions [ball-positions]
+  (and
+    (= (count ball-positions) 2)
+    (slope-can-be-calculated (first ball-positions) (second ball-positions))))
 
 (defn- previous-slope [ball-positions]
   (slope (first ball-positions) (second ball-positions)))
@@ -29,12 +31,18 @@
 (defn- slope-is-steady [ball-positions]
   (< (difference-between-slopes ball-positions) slope-difference-threshold))
 
+(defn- slopes-can-be-calculated [ball-positions]
+  (and
+   (slope-can-be-calculated (first ball-positions) (second ball-positions))
+   (slope-can-be-calculated (second ball-positions) (nth ball-positions 2))))
+
 (defn direction-is-accurate [ball-positions]
-  (or
-     (there-are-only-two-positions ball-positions)
-     (and
-          (there-are-enough-positions-to-estimate-direction ball-positions)
-          (slope-is-steady ball-positions))))
+    (or
+       (slope-can-be-calculated-from-two-positions ball-positions)
+       (and
+            (there-are-more-than-two-positions ball-positions)
+            (slopes-can-be-calculated ball-positions)
+            (slope-is-steady ball-positions))))
 
 (defn target-height [data]
   (if (previous-position-exists data)

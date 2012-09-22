@@ -11,6 +11,3 @@
   (is (= paddle-height 25))
   (is (= paddle-width 10))
   (is (= ball-radius 15))
-)
-
-(run-all-tests)
