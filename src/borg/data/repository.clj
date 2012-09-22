@@ -1,6 +1,5 @@
 (ns borg.data.repository)
 
-
 (defstruct time-direction :time :direction)
 
 (def ^:dynamic saved-data [])

@@ -4,11 +4,12 @@
         borg.logic.offense
         clojure.contrib.math))
 
-(defn- difference-between-modified-slope-and-actual [factor p1 p2 p3 p4]
-  (- (invert (modify-slope factor (slope p1 p2))) (slope p3 p4)))
+(defn- difference-between-attack-slope-and-actual [factor p1 p2 p3 p4]
+  (- (invert (attack-slope factor (slope p1 p2))) (slope p3 p4)))
 
+;;; data gathered from actual games go make sure attack-slope calculation predicts the slopes within 0.05 accuracy
 (deftest modify-slope-tests
-  (are [f p1 p2 p3 p4] (< (abs (difference-between-modified-slope-and-actual f p1 p2 p3 p4)) 0.05)
+  (are [f p1 p2 p3 p4] (< (abs (difference-between-attack-slope-and-actual f p1 p2 p3 p4)) 0.05)
     3/7 {:x 64.20929945492941, :y 43.35769959306079} {:x 43.07171140124179, :y 59.82921673600332} {:x 27.092522457818404, :y 86.29754935220093} {:x 45.75537242906242, :y 95.11532888241534}
     3/7 {:x 46.76198226402113, :y 183.50021331304703} {:x 35.795999872750116, :y 176.0015802992897} {:x 30.747548058555935, :y 149.98674791289665} {:x 53.896872691589905, :y 126.33180419350093}
     3/7 {:x 46.2302324791017, :y 157.5556024360176} {:x 34.166307095987676, :y 168.98399757226994} {:x 39.06439652605054, :y 199.74943851105579} {:x 58.2260444466621, :y 211.10181203972857}

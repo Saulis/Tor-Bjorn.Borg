@@ -1,6 +1,7 @@
 (ns tests.logic.strategy-tests
   (:use clojure.test
         borg.constants
+        borg.data.parser
         borg.logic.strategy))
 
 (deftest new-direction-is-accurate-tests
@@ -26,5 +27,10 @@
                   {:time 1348244790260, :left {:y 333.0008943729551, :playerName "Saulis"}, :right {:y 54.6829479057853, :playerName "karp"}, :ball {:pos {:x 356.4251060866989, :y 169.6717361090724}}}
                   {:time 1348244790350, :left {:y 328.56509480188856, :playerName "Saulis"}, :right {:y 64.6829479057853, :playerName "karp"}, :ball {:pos {:x 315.99063064193456, :y 193.7255340216784}}}])
 
+(def game-data-2 [{:time 1348339997067, :left {:y 203.93220435298718, :playerName "Saulis7"}, :right {:y 429.9, :playerName "jebin7"}, :ball {:pos {:x 580.5416391671689, :y 457.4574675768802}}, :conf {:maxWidth 640, :maxHeight 480, :paddleHeight 50, :paddleWidth 10, :ballRadius 5, :tickInterval 30}}
+                  {:time 1348339997217, :left {:y 203.93230286686574, :playerName "Saulis7"}, :right {:y 429.4, :playerName "jebin7"}, :ball {:pos {:x 623.7012152810121, :y 474.89747156419753}}, :conf {:maxWidth 640, :maxHeight 480, :paddleHeight 50, :paddleWidth 10, :ballRadius 5, :tickInterval 30}}
+                  {:time 1348339997247, :left {:y 203.93231841973733, :playerName "Saulis7"}, :right {:y 429.4, :playerName "jebin7"}, :ball {:pos {:x 623.7012152810121, :y 474.89747156419753}}, :conf {:maxWidth 640, :maxHeight 480, :paddleHeight 50, :paddleWidth 10, :ballRadius 5, :tickInterval 30}}])
+
 (deftest game-tests
-  (is (= (target-height game-data-1) -1)))
+  (is (= (target-height game-data-1) -1))
+  (is (false? (direction-is-accurate (last-three-ball-positions game-data-2)))))

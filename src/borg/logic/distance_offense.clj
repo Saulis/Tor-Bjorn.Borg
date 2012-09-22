@@ -5,7 +5,7 @@
         clojure.contrib.math))
 
 (defn- with-good-slope [x]
-  (<= (abs (:slope x)) 1))
+  (<= (abs (:slope x)) (/ max-width max-height)))
 
 (defn- landing-height-on-opponents-side [attack-slope landing-height]
   (landing-height-on-right (left-hit-width) landing-height (invert attack-slope)))

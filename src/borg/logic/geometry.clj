@@ -19,7 +19,7 @@
 
 ;;; helps to prevent those nasty divide by zeroes
 (defn slope-can-be-calculated [p1 p2]
-  (not= (x-delta p1 p2) 0))
+  (not (zero? (x-delta p1 p2))))
 
 (defn slope [p1 p2]
   (/ (y-delta p1 p2) (x-delta p1 p2)))

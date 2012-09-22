@@ -21,7 +21,7 @@
       {:factor f :distance (distance-to-nearest-corner attack-slope landing-height) :slope attack-slope })))
 
 (defn- with-good-slope [x]
-  (<= (abs (:slope x)) 1))
+  (<= (abs (:slope x)) (/ max-width max-height)))
 
 (defn- distances-to-corners-with-good-slope [factors current-slope landing-height]
   (filter with-good-slope (distances-to-corners factors current-slope landing-height)))

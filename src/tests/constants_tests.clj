@@ -11,3 +11,6 @@
   (is (= paddle-height 25))
   (is (= paddle-width 10))
   (is (= ball-radius 15))
+  (is (= half-paddle-height 25/2))
+  (is (= mid-height 120/2))
+  )

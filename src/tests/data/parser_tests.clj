@@ -16,5 +16,9 @@
 (deftest last-three-ball-positions-tests
   (is (= (last-three-ball-positions data) [{:x 2 :y 2} {:x 3 :y 3} {:x 4 :y 4}])))
 
+(deftest current-height-tests
+  (is (= (current-height [{:left {:x 50 :y 100}}]) 100)))
 
+(deftest current-opponent-height-tests
+  (is (= (current-opponent-height [{:right {:x 50 :y 100}}]) 100)))
 
