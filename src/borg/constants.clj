@@ -1,10 +1,10 @@
 (ns borg.constants)
 
-(def max-width)
-(def max-height)
-(def ball-radius)
-(def paddle-width)
-(def paddle-height)
+(def max-width 640)
+(def max-height 480)
+(def ball-radius 5)
+(def paddle-width 10)
+(def paddle-height 50)
 
 (def mid-height)
 (def half-paddle-height)
