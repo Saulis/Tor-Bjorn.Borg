@@ -20,7 +20,7 @@
   (is (= (target-height nil)) mid-height)
   (is (= (target-height [])) mid-height)
   (is (= (target-height [0])) mid-height)
-  (is (= (target-height [0 1])) mid-height)
+  (is (< (target-height [{:right {:y 0 } :ball {:pos {:x 320, :y 240}}} {:right {:y 0 } :ball {:pos {:x 330, :y 240}}}]) mid-height))
   )
 
 (def game-data-1 [{:time 1348244790110, :left {:y 344.10063065067453, :playerName "Saulis"}, :right {:y 40.6829479057853, :playerName "karp"}, :ball {:pos {:x 413.033371709369, :y 135.996419031424}}}
@@ -32,5 +32,5 @@
                   {:time 1348339997247, :left {:y 203.93231841973733, :playerName "Saulis7"}, :right {:y 429.4, :playerName "jebin7"}, :ball {:pos {:x 623.7012152810121, :y 474.89747156419753}}, :conf {:maxWidth 640, :maxHeight 480, :paddleHeight 50, :paddleWidth 10, :ballRadius 5, :tickInterval 30}}])
 
 (deftest game-tests
-  (is (= (target-height game-data-1) -1))
+  (is (pos? (target-height game-data-1))) ;;; make sure doesnt crash
   (is (false? (direction-is-accurate (last-three-ball-positions game-data-2)))))

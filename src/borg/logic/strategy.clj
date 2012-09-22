@@ -14,6 +14,8 @@
 (defn- previous-position-exists [data]
   (>= (count data) 2))
 
+;;; slope calculation
+
 (defn- slope-can-be-calculated-from-two-positions [ball-positions]
   (and
     (= (count ball-positions) 2)
@@ -36,6 +38,8 @@
    (slope-can-be-calculated (first ball-positions) (second ball-positions))
    (slope-can-be-calculated (second ball-positions) (nth ball-positions 2))))
 
+;;; direction is accurate if atleast three consecutive balls are heading the same way. This prevents errors during bounces
+
 (defn direction-is-accurate [ball-positions]
     (or
        (slope-can-be-calculated-from-two-positions ball-positions)
@@ -43,6 +47,8 @@
             (there-are-more-than-two-positions ball-positions)
             (slopes-can-be-calculated ball-positions)
             (slope-is-steady ball-positions))))
+
+;;; target height for the paddle
 
 (defn target-height [data]
   (if (previous-position-exists data)

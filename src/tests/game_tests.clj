@@ -32,7 +32,7 @@
   (- (target-height data) (landing-height (previous-ball-position data) (current-ball-position data))))
 
 (deftest game-tests
-  (are [x] (> 21 (abs (difference-between-target-and-landing-heights x)))
+  (are [x] (>= half-paddle-height (abs (difference-between-target-and-landing-heights x)))
   game-data-1
   game-data-2
   game-data-3
