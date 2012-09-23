@@ -1,2 +1,2 @@
 #!/bin/sh
-kill `ps -ef | awk '/[c]lojure-pong/{ print $2 }'`
+kill `ps -ef | awk '/tor-bjorn.borg/{ print $2 }'`
