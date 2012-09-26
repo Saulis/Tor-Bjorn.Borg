@@ -25,7 +25,8 @@
 (defn it-is-time-to-send-direction-message []
   (and
     (direction-is-accurate (last-three-ball-positions saved-data))
-    (nineteen-messages-have-not-been-sent-under-two-seconds saved-messages)))
+    (nineteen-messages-have-not-been-sent-under-two-seconds saved-messages))
+    (enough-time-has-passed-since-previous-message saved-messages (new-direction saved-data)))
 
 (defn send-direction-message [conn]
   (save-message (new-direction saved-data))
