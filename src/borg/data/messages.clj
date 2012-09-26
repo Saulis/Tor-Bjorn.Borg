@@ -1,26 +1,26 @@
 (ns borg.data.messages)
 
-(defn nine-messages-have-not-been-sent [messages]
-  (< (count messages) 9))
+(defn nineteen-messages-have-not-been-sent [messages]
+  (< (count messages) 19))
 
-(defn ninth-message [messages]
-  (first (take-last 9 messages)))
+(defn nineteenth-message [messages]
+  (first (take-last 19 messages)))
 
-(defn time-of-ninth-message [messages]
-  (:time (ninth-message messages)))
+(defn time-of-nineteenth-message [messages]
+  (:time (nineteenth-message messages)))
 
-(defn time-since-ninth-message [messages]
+(defn time-since-nineteenth-message [messages]
   (if (empty? messages)
     nil
-    (- (System/currentTimeMillis) (time-of-ninth-message messages))))
+    (- (System/currentTimeMillis) (time-of-nineteenth-message messages))))
 
-(defn atleast-one-second-has-passed-since-ninth-message [messages]
+(defn atleast-two-seconds-has-passed-since-nineteenth-message [messages]
   (if (empty? messages)
     false
-    (>= (time-since-ninth-message messages) 1000)))
+    (>= (time-since-nineteenth-message messages) 2000)))
 
-;Using ten messages was kinda pushing it - got kicked from the server a few times. Let's go with nine msgs / second.
-(defn nine-messages-have-not-been-sent-under-one-second [messages]
+; Using ten messages per sec was kinda pushing it - got kicked from the server a few times. Let's go with nineteen msgs / two seconds.
+(defn nineteen-messages-have-not-been-sent-under-two-seconds [messages]
   (or
-    (nine-messages-have-not-been-sent messages)
-    (atleast-one-second-has-passed-since-ninth-message messages)))
+    (nineteen-messages-have-not-been-sent messages)
+    (atleast-two-seconds-has-passed-since-nineteenth-message messages)))

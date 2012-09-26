@@ -15,5 +15,5 @@
   (def saved-messages []))
 
 (defn save-message [direction]
-  (def saved-messages (conj (vec (take-last 9 saved-messages)) (struct time-direction (System/currentTimeMillis) direction))))
+  (def saved-messages (conj (vec (take-last 19 saved-messages)) (struct time-direction (System/currentTimeMillis) direction))))
 
