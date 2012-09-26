@@ -14,6 +14,12 @@
 (defn clear-messages []
   (def saved-messages []))
 
-(defn save-message [direction]
-  (def saved-messages (conj (vec (take-last 19 saved-messages)) (struct time-direction (System/currentTimeMillis) direction))))
+(defn- add-message [message]
+  (def saved-messages (conj (vec (take-last 19 saved-messages)) message)))
 
+(defn save-message [direction]
+  (add-message (struct time-direction (System/currentTimeMillis) direction)))
+
+(defn reset-direction [last-message]
+  (if (not (nil? last-message))
+    (add-message {:time (:time last-message) :direction 0.0})))

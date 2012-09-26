@@ -24,3 +24,13 @@
   (is (empty? saved-messages))
   )
 
+(deftest reset-direction-tests
+  (clear-messages)
+  (reset-direction nil)
+  (is (= (count saved-messages) 0))
+  (reset-direction {:time 1000 :direction 1.0})
+  (is ( = (count saved-messages) 1))
+  (is (= (:time (last saved-messages)) 1000))
+  (is (= (:direction (last saved-messages)) 0.0))
+)
+

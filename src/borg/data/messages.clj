@@ -1,7 +1,7 @@
 (ns borg.data.messages)
 
 (def waiting-time-before-sending-same-direction 200)
-(def waiting-time-minimum 10)
+(def waiting-time-minimum 50)
 
 (defn- time-of-message [message]
   (:time message))
@@ -48,7 +48,7 @@
 (defn- time-since-last-message [messages]
   (time-since-message (last messages)))
 
-;;; Let's save up messages if the direction isn't going to change
+;;; Let's save up messages if the direction isn't going to change and use more messages when it's needed.
 
 (defn- previous-direction [messages]
   (:direction (last messages)))
