@@ -1,3 +1,5 @@
+;;; Based on a bootstrap template written by Tuomas Hakkarainen (http://github.com/singen)
+
 (ns borg.core
   (:use [clojure.data.json :only (read-json json-str)]
         [clojure.tools.logging :only (info error)]
